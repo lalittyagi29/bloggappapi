@@ -34,6 +34,7 @@ public class GlobalExceptionHandler {
 			String errorMessage=error.getDefaultMessage();
 			String fieldname=((FieldError)error).getField();
 			response.put(fieldname,errorMessage);
+			System.out.println("other branch");
 			
 		});
 		return new ResponseEntity<Map<String,String>>(response,HttpStatus.BAD_REQUEST);
