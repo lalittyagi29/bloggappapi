@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.bloggapp.payloads.ApiResponse;
 import com.bloggapp.payloads.UserDto;
 import com.bloggapp.services.UserService;
@@ -57,7 +58,7 @@ public class UesrController {
 	}
 
 	@PutMapping("/{userid}")
-	public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto, @PathVariable Integer userid) {
+	public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto, @PathVariable Integer userid) {
 
 		UserDto updateduser = this.userService.updateUser(userDto, userid);
 		return ResponseEntity.ok(updateduser);
