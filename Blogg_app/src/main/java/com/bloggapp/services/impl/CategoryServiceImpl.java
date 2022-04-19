@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bloggapp.entities.Category;
+import com.bloggapp.exceptions.ResourceNotFoundException;
 import com.bloggapp.payloads.CategoryDto;
 import com.bloggapp.repository.CategoryRepo;
 import com.bloggapp.services.CategoryService;
@@ -28,13 +29,15 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public void deleteCategory(Integer categoryId) {
 		
-		this.categoryRepo.deleteById(categoryId);
+		Category cat = this.categoryRepo.findById(categoryId).orElseThrow(()->new ResourceNotFoundException("Category", "CategoryId", categoryId));
+		this.categoryRepo.delete(cat);
 	}
 
 	@Override
 	public CategoryDto updateCategory(CategoryDto categoryDto, Integer categoryId) {
 		
-		Category byId = this.categoryRepo.getById(categoryId);
+		Category byId = this.categoryRepo.findById(categoryId).orElseThrow(()->new ResourceNotFoundException("Category", "CategoryId", categoryId));
+		//Category byId = this.categoryRepo.getById(categoryId);
 		byId.setCategoryAbout(categoryDto.getCategoryAbout());
 		byId.setCategoryTitle(categoryDto.getCategoryTitle());
 		Category save = this.categoryRepo.save(byId);
@@ -44,7 +47,7 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public CategoryDto getCategoryById(Integer categoryId) {
 		
-     	Category cat=this.categoryRepo.getById(categoryId);
+     	Category cat = this.categoryRepo.findById(categoryId).orElseThrow(()->new ResourceNotFoundException("Category", "CategoryId", categoryId));
 		return this.categoryToDto(cat);
 	}
 

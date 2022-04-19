@@ -3,6 +3,7 @@ package com.bloggapp.exceptions;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -34,7 +35,6 @@ public class GlobalExceptionHandler {
 			String errorMessage=error.getDefaultMessage();
 			String fieldname=((FieldError)error).getField();
 			response.put(fieldname,errorMessage);
-			System.out.println("other branch");
 			
 		});
 		return new ResponseEntity<Map<String,String>>(response,HttpStatus.BAD_REQUEST);
