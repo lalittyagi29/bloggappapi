@@ -1,15 +1,10 @@
 package com.bloggapp.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
+import javax.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,14 +13,15 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Category {
+public class Comment {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer categoryId;
-	private String categoryTitle;
-	private String categoryAbout;
-
-	@OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
-	private List<Post> posts=new ArrayList<>();
+	private int cid;
+	private String content;
+	
+	@ManyToOne
+	private User user;
+	@ManyToOne
+	private Post post;
 }
